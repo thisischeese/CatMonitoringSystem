@@ -1,0 +1,45 @@
+#mysql을 연결하는 라이브러리
+pip install mysql-connector-python
+
+import mysql.connector
+from pyfcm import FCMNotification
+
+# FCM 설정
+FCM_SERVER_KEY = 'YOUR_FCM_SERVER_KEY'
+push_service = FCMNotification(api_key=FCM_SERVER_KEY)
+
+# MySQL 데이터베이스 연결
+db_host = 'your_mysql_host'
+db_user = 'your_mysql_user'
+db_password = 'your_mysql_password'
+db_name = 'your_mysql_database'
+
+conn = mysql.connector.connect(host=db_host, user=db_user, password=db_password, database=db_name)
+cursor = conn.cursor()
+
+# 예제: 사용자 토큰 가져오기
+sql = "SELECT device_token FROM users"
+cursor.execute(sql)
+result = cursor.fetchall()
+
+# 메시지 설정
+message_title = "묘묘안"
+message_body = "00시 00분에 고양이가 'Angry' 울음소리를 발생했습니다."
+
+# 각 사용자에게 FCM 알림 보내기
+for row in result:
+    device_token = row[0]
+    message = {
+        "title": message_title,
+        "body": message_body
+    }
+    
+    try:
+        result = push_service.notify_single_device(registration_id=device_token, data_message=message)
+        print(f"Message sent to {device_token}, Result: {result}")
+    except Exception as e:
+        print(f"Error sending message to {device_token}: {e}")
+
+# MySQL 연결 종료
+cursor.close()
+conn.close()
