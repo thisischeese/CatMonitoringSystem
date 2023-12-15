@@ -1,2 +1,2 @@
-# opensrc_final-project
-오픈소스 팀프로젝트
+# opensrc_final_project
+2023 오픈소스 팀프로젝트
