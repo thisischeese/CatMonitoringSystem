@@ -1,0 +1,28 @@
+#데이터베이스와 FCM연결
+mysqli_connect(DB_HOST, DB_USER,DB_PASSWORD, DB_NAME) 
+
+my_message = "00시 00분에 고양이 울음소리 'Angry'를 감지했습니다."
+
+message = {"my_message": my_message}
+send_notification(tokens, message)
+
+from pyfcm import FCMNotification
+
+# FCM 서버 키
+FCM_SERVER_KEY = 'YOUR_FCM_SERVER_KEY'
+
+# 디바이스 토큰
+device_token = 'USER_DEVICE_TOKEN'
+
+# 메시지 설정
+message = {
+    'title': '알림 제목',
+    'body': '알림 내용',
+}
+
+push_service = FCMNotification(api_key=FCM_SERVER_KEY)
+
+# FCM 메시지 전송
+result = push_service.notify_single_device(registration_id=device_token, data_message=message)
+
+print(result)
