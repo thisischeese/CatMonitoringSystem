@@ -1,5 +1,5 @@
 # MonitoringMeow 🐱‍💻
-* Participated in Engaged Learning Contest 2023
+* 2023학년도 AI융합경진대회 예선 참가작
 
 
 # PPT
